@@ -137,7 +137,8 @@ class PosixFile : public File {
   }
 
   Status Flush() override {
-    if (fdatasync(fd_) != 0) return IOError(filename_, errno);
+    // if (fdatasync(fd_) != 0) return IOError(filename_, errno);
+    if (fsync(fd_) != 0) return IOError(filename_, errno); // TODO:ZH:CHANGED
     return Status::OK;
   }
 
@@ -248,4 +249,3 @@ File *NewStdoutFile() {
 REGISTER_FILE_SYSTEM_TYPE("posix", PosixFileSystem);
 
 }  // namespace sling
-

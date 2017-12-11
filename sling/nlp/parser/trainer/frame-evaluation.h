@@ -17,7 +17,7 @@
 #ifndef SLING_NLP_PARSER_TRAINER_FRAME_EVALUATION_H_
 #define SLING_NLP_PARSER_TRAINER_FRAME_EVALUATION_H_
 
-#include <hash_map>
+#include <ext/hash_map>
 #include <string>
 #include <utility>
 #include <vector>
