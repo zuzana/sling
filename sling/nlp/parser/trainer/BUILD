@@ -180,4 +180,3 @@ cc_library(
     "//sling/string:strcat",
   ],
 )
-
