@@ -16,9 +16,9 @@ cc_library(
   includes = [
     "include",
     "include/external/nsync/public",
+    "python"
   ],
   linkopts = [
-    "-l:/usr/local/lib/python2.7/dist-packages/tensorflow/libtensorflow_framework.so",
+
   ],
 )
-

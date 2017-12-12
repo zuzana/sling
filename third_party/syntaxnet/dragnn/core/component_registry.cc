@@ -15,9 +15,9 @@
 
 #include "dragnn/core/component_registry.h"
 
-namespace syntaxnet {
+// namespace syntaxnet {
 
 // Class registry for DRAGNN components.
-REGISTER_COMPONENT_REGISTRY("DRAGNN Component", dragnn::Component);
+REGISTER_COMPONENT_REGISTRY("DRAGNN Component", syntaxnet::dragnn::Component);
 
-}  // namespace syntaxnet
+// }  // namespace syntaxnet
