@@ -39,6 +39,7 @@ FileSystem *default_file_system = nullptr;
 
 // Initialize all registered file systems.
 void InitializeFileSystems() {
+
   auto *registry = FileSystem::registry();
   for (auto *fs = registry->components; fs != nullptr; fs = fs->next()) {
     VLOG(2) << "Initializing " << fs->type() << " file system";
@@ -55,6 +56,11 @@ void InitializeFileSystems() {
 // default file system is returned.
 FileSystem *FindFileSystem(const string &filename, string *rest) {
   // Match the first component in the path.
+  bool a = (default_file_system == nullptr);
+  if (a) {
+    File::Init();
+  }
+
   if (!filename.empty() && filename[0] == '/') {
     int slash = filename.find('/', 1);
     if (slash != -1) {
@@ -85,6 +91,7 @@ void File::Init() {
 Status File::Open(const string &name, const char *mode, File **f) {
   // Find file system.
   string rest;
+
   FileSystem *fs = FindFileSystem(name, &rest);
   if (fs == nullptr) return NoFileSystem(name);
 
@@ -316,4 +323,3 @@ REGISTER_INITIALIZER(filesystem, {
 });
 
 }  // namespace sling
-

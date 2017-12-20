@@ -30,4 +30,3 @@ class LibraryInitializer {
 static LibraryInitializer init __attribute__((init_priority(2000)));
 
 }  // namespace sling
-

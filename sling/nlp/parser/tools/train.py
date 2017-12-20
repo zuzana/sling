@@ -34,7 +34,8 @@ from dragnn.python import check
 from google.protobuf import text_format
 from tensorflow.python.platform import gfile
 
-tf.load_op_library('bazel-bin/sling/nlp/parser/trainer/sempar.so')
+# tf.load_op_library('bazel-bin/sling/nlp/parser/trainer/sempar.so')
+tf.load_file_system_library('bazel-bin/sling/nlp/parser/trainer/sempar.so')
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS
@@ -52,7 +53,6 @@ flags.DEFINE_integer('train_steps', 200000, 'Number of training steps')
 flags.DEFINE_integer('report_every', 500, 'Checkpoint interval')
 flags.DEFINE_integer('batch_size', 8, 'Training batch size')
 flags.DEFINE_string('flow', '', 'Myelin flow file for model output')
-
 def read_corpus(file_pattern):
   docs = []
   if file_pattern.endswith(".zip"):
@@ -107,10 +107,14 @@ def evaluator(gold_docs, test_docs):
     return {'eval_metric': 0.0}
 
   eval_output = {}
+
   for line in output.splitlines():
     line = line.rstrip()
     tf.logging.info("Evaluation Metric: %s", line)
     parts = line.split('\t')
+    # TODO:ZH:L116-117 - I had some wild naive logging in both python and c++ and it was causing issues
+    if (len(parts) < 2):
+      continue
     check.Eq(len(parts), 2, line)
     eval_output[parts[0]] = float(parts[1])
     if line.startswith("SLOT_F1"):

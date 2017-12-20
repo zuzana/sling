@@ -137,8 +137,7 @@ class PosixFile : public File {
   }
 
   Status Flush() override {
-    // if (fdatasync(fd_) != 0) return IOError(filename_, errno);
-    if (fsync(fd_) != 0) return IOError(filename_, errno); // TODO:ZH:CHANGED
+    if (fcntl(fd_, F_FULLFSYNC) != 0) return IOError(filename_, errno);
     return Status::OK;
   }
 

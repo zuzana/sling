@@ -19,9 +19,14 @@
 #include "sling/base/logging.h"
 #include "sling/base/types.h"
 
+
+
 namespace sling {
 
+
+
 FileInputStream::FileInputStream(const string &filename, int block_size) {
+
   CHECK(File::Open(filename, "r", &file_));
   size_ = block_size;
   buffer_ = new uint8[size_];
@@ -175,4 +180,3 @@ int64 FileOutputStream::ByteCount() const {
 }
 
 }  // namespace sling
-

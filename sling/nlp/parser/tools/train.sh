@@ -49,7 +49,9 @@ readonly COMMAND=`echo $0 $@`
 
 # Input resources and arguments.
 SEM=local/sempar
+# SEM=$HOME/sempar_ontonotes
 COMMONS=${SEM}/commons
+# COMMONS=/tmp/commons
 OUTPUT_FOLDER=${SEM}/out
 TRAIN_FILEPATTERN=${SEM}/train.zip
 DEV_FILEPATTERN=${SEM}/dev.zip
@@ -68,7 +70,8 @@ ADAM_BETA2=0.999
 ADAM_EPS=0.00001
 GRAD_CLIP_NORM=1.0
 DROPOUT=1.0
-TRAIN_STEPS=200000
+# TRAIN_STEPS=200000
+TRAIN_STEPS=100000
 DECAY_STEPS=500000
 MOVING_AVERAGE=true
 
@@ -217,10 +220,10 @@ then
     --documents=${TRAIN_FILEPATTERN} \
     --commons=${COMMONS} \
     --output_dir=${OUTPUT_FOLDER} \
-    --word_embeddings=${PRETRAINED_WORD_EMBEDDINGS} \
     --word_embeddings_dim=${WORD_EMBEDDINGS_DIM} \
+    --word_embeddings=${PRETRAINED_WORD_EMBEDDINGS} \
     --oov_lstm_features=${OOV_FEATURES} \
-    --logtostderr
+    --logtostderr 
 fi
 
 if [[ "$DO_TRAINING" -eq 1 ]];

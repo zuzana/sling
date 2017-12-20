@@ -159,6 +159,7 @@ cc_binary(
     ":sempar-component",
     "//sling/base:libinit",
     "//sling/file:posix",
+    "//sling/stream",
     "//third_party/syntaxnet:dragnn-ops",
   ],
   linkshared = 1,
