@@ -16,6 +16,7 @@
 #define SLING_FRAME_STORE_H_
 
 #include <stdlib.h>
+#include <atomic>
 #include <string>
 #include <utility>
 
@@ -474,6 +475,9 @@ struct Datum {
 
   // Invalidate heap object by setting the type to INVALID.
   void invalidate() { info = size() | INVALID; }
+
+  // Resize object.
+  void resize(int size) { info = size | typebits(); }
 
   // Returns the next object in the heap.
   Datum *next() const {
@@ -962,6 +966,9 @@ class Store {
   // only be used on anonymous frames. Returns handle to the new frame.
   Handle Extend(Handle frame, Handle name, Handle value);
 
+  // Deletes all slots in a frame with a particular name.
+  void Delete(Handle frame, Handle name);
+
   // Returns a display name for the handle. This should only be used for display
   // purposes and should not be used as an alternative identifier for the
   // handle. If you want to get the text representation of an object you should
@@ -1021,6 +1028,20 @@ class Store {
 
   // Returns the root list for the store.
   const Root *roots() const { return &roots_; }
+
+  // Check if store is shared.
+  bool shared() const { return refs_ != -1; }
+
+  // Make store shared. This will set the reference count to one and the store
+  // will be deleted when the reference count reaches zero.
+  void Share();
+
+  // Add reference count to store.
+  void AddRef() const;
+
+  // Release reference count on store. This will delete the store if this is the
+  // last reference.
+  void Release() const;
 
  public:
   // The methods below are low-level methods for internal use.
@@ -1295,6 +1316,11 @@ class Store {
 
   // Number of hash buckets in the symbol table.
   int num_buckets_;
+
+  // Reference count for shared stores. If the reference count is -1, the store
+  // is not shared. Otherwise, the store is deleted when the reference count
+  // goes to zero.
+  mutable std::atomic<int> refs_{-1};
 
   // Number of GC locks. No garbage collection is performed as long as the
   // lock count is non-zero.

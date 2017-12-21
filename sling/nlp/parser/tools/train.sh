@@ -223,7 +223,7 @@ then
     --word_embeddings_dim=${WORD_EMBEDDINGS_DIM} \
     --word_embeddings=${PRETRAINED_WORD_EMBEDDINGS} \
     --oov_lstm_features=${OOV_FEATURES} \
-    --logtostderr 
+    --logtostderr
 fi
 
 if [[ "$DO_TRAINING" -eq 1 ]];

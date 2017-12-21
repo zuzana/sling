@@ -17,9 +17,8 @@
 #ifndef SLING_NLP_PARSER_TRAINER_FRAME_EVALUATION_H_
 #define SLING_NLP_PARSER_TRAINER_FRAME_EVALUATION_H_
 
-// #include <ext/hash_map>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -60,7 +59,6 @@ class FrameEvaluation {
   };
 
   // Mapping from span to mention frame.
-  // typedef hash_map<Span, Handle, SpanHash> MentionMap;
   typedef std::unordered_map<Span, Handle, SpanHash> MentionMap;
 
   // Frame alignment.
