@@ -59,11 +59,6 @@ FileSystem *FindFileSystem(const string &filename, string *rest) {
   if (default_file_system == nullptr) File::Init();
 
   // Match the first component in the path.
-  bool a = (default_file_system == nullptr);
-  if (a) {
-    File::Init();
-  }
-
   if (!filename.empty() && filename[0] == '/') {
     int slash = filename.find('/', 1);
     if (slash != -1) {
