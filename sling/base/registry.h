@@ -243,23 +243,23 @@ template <class T> class Singleton {
 
 #define REGISTER_COMPONENT_TYPE(base, type, component) \
   static base *__##component##__factory() { return new component; } \
-  __attribute__((init_priority(800))) \
+  __attribute__(()) \
   static base::Registry::Registrar __##component##__##registrar( \
       base::registry(), type, #component, __FILE__, __LINE__, \
       __##component##__factory)
 
 #define REGISTER_COMPONENT_REGISTRY(type, classname) \
-  template <> __attribute__((init_priority(900))) \
+  template <> __attribute__(()) \
   classname::Registry sling::Component<classname>::registry_ = { \
       type, #classname, __FILE__, __LINE__, nullptr}
 
 #define REGISTER_SINGLETON_TYPE(base, type, component) \
-  __attribute__((init_priority(800))) \
+  __attribute__(()) \
   static base::Registry::Registrar __##component##__##registrar( \
       base::registry(), type, #component, __FILE__, __LINE__, new component)
 
 #define REGISTER_SINGLETON_REGISTRY(type, classname) \
-  template <> __attribute__((init_priority(900))) \
+  template <> __attribute__(()) \
   classname::Registry sling::Singleton<classname>::registry_ = { \
       type, #classname, __FILE__, __LINE__, nullptr}
 

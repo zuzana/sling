@@ -41,7 +41,7 @@ struct ModuleInitializer {
 #define REGISTER_INITIALIZER(name, body)                        \
   namespace {                                                   \
     static void init_module_##name () { body; }                 \
-    __attribute__((init_priority(1000)))                        \
+    __attribute__(())                                           \
     sling::ModuleInitializer initializer_module_##name          \
       (#name, init_module_##name);                              \
   }

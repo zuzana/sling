@@ -27,6 +27,6 @@ class LibraryInitializer {
 
 // The initialization priority should be set higher than the priority of the
 // module initializers in init.h.
-static LibraryInitializer init __attribute__((init_priority(2000)));
+static LibraryInitializer init __attribute__(());
 
 }  // namespace sling
