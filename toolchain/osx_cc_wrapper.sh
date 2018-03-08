@@ -27,7 +27,7 @@
 #
 set -eu
 
-GCC=/usr/bin/gcc
+GCC=/usr/local/bin/gcc-7
 INSTALL_NAME_TOOL="/usr/bin/install_name_tool"
 
 LIBS=
@@ -51,7 +51,7 @@ for i in "$@"; do
 done
 
 # Call gcc
-${GCC} "$@"
+PATH="/usr/local/Cellar/gcc/7.3.0/libexec/gcc/x86_64-apple-darwin17.3.0/7.3.0:$PATH" ${GCC} "$@"
 
 function get_library_path() {
     for libdir in ${LIB_DIRS}; do

@@ -21,7 +21,7 @@ toolchain {
 
   tool_path { name: "ar" path: "/usr/bin/libtool" }
   tool_path { name: "compat-ld" path: "/usr/bin/ld" }
-  tool_path { name: "cpp" path: "/usr/bin/cpp" }
+  tool_path { name: "cpp" path: "/usr/local/bin/cpp-7" }
   tool_path { name: "dwp" path: "/usr/bin/dwp" }
   tool_path { name: "gcc" path: "osx_cc_wrapper.sh" }
   cxx_flag: "-std=c++0x"
@@ -31,7 +31,11 @@ toolchain {
   linker_flag: "-headerpad_max_install_names"
   # TODO(ulfjack): This is wrong on so many levels. Figure out a way to auto-detect the proper
   # setting from the local compiler, and also how to make incremental builds correct.
-  cxx_builtin_include_directory: "/"
+  cxx_builtin_include_directory: "/usr/local/lib/gcc/7/gcc/x86_64-apple-darwin17.3.0/7.3.0/include-fixed"
+  cxx_builtin_include_directory: "/usr/local/lib/gcc/7/gcc/x86_64-apple-darwin17.3.0/7.3.0/include"
+  cxx_builtin_include_directory: "/usr/local/Cellar/gcc/7.3.0/include/c++/7.3.0"
+  cxx_builtin_include_directory: "/usr/local/include"
+  cxx_builtin_include_directory: "/usr/include"
   tool_path { name: "gcov" path: "/usr/bin/gcov" }
   tool_path { name: "ld" path: "/usr/bin/ld" }
   tool_path { name: "nm" path: "/usr/bin/nm" }
@@ -58,13 +62,13 @@ toolchain {
 
   # Enable coloring even if there's no attached terminal. Bazel removes the
   # escape sequences if --nocolor is specified.
-  compiler_flag: "-fcolor-diagnostics"
+  compiler_flag: "-fdiagnostics-color"
 
   # All warnings are enabled. Maybe enable -Werror as well?
   compiler_flag: "-Wall"
   # Enable a few more warnings that aren't part of -Wall.
-  compiler_flag: "-Wthread-safety"
-  compiler_flag: "-Wself-assign"
+  # compiler_flag: "-Wthread-safety"
+  # compiler_flag: "-Wself-assign"
 
   # Keep stack frames for debugging, even in opt mode.
   compiler_flag: "-fno-omit-frame-pointer"
