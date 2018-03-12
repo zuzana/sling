@@ -23,7 +23,7 @@ A more detailed description of the SLING parser can be found in this paper:
 * Michael Ringgaard, Rahul Gupta, and Fernando C. N. Pereira. 2017.
   *SLING: A framework for frame semantic parsing*. http://arxiv.org/abs/1710.07032.
 
-</span>
+This is SEMPAR, the first generation of the SLING parser. We have started to work on CASPAR, the second generation of the parser, which can be found [here](https://github.com/google/sling/tree/caspar).
 
 ## Trying out the parser
 
@@ -74,7 +74,7 @@ sudo pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-
 ## Building
 
 Operating system: Linux<br>
-Languages: C++, Python 2.7, assembler<br>
+Languages: C++ 11 (GCC 4 and above), Python 2.7, assembler<br>
 CPU: Intel x64 or compatible<br>
 Build system: Bazel<br>
 
@@ -84,13 +84,12 @@ You can test your installation by building a few important targets.
 bazel build -c opt sling/nlp/parser sling/nlp/parser/tools:all
 ```
 
-**NOTE:** In case you get compile errors complaining about missing Tensorflow
+**NOTES:** 
+*  In case you get compile errors complaining about missing Tensorflow
 includes, try the following:
-*  Recreate [this soft
-   link](sling/blob/master/third_party/tensorflow/include) to point to your Tensorflow include folder.
-*  Change [this
-   dependency](https://github.com/google/sling/blob/04d6f28269bdc7d29c71d8dc24d74fe39641f589/third_party/tensorflow/BUILD#L21) to point to your Tensorflow's pywrap library.
-
+  *  Recreate [this soft link](sling/blob/master/third_party/tensorflow/include) to point to your Tensorflow include folder.
+  *  Change [this dependency](https://github.com/google/sling/blob/04d6f28269bdc7d29c71d8dc24d74fe39641f589/third_party/tensorflow/BUILD#L21) to point to your Tensorflow's pywrap library.
+*  In case you are using an older version of GCC (< v5), you may want to comment out [this cxxopt](https://github.com/google/sling/blob/f8f0fbd1a18596ccfe6dbfba262a17afd36e2b5f/.bazelrc#L8) in .bazelrc.
 
 ## Training
 
@@ -170,6 +169,7 @@ can be seen below. It is best to create one SLING document per input sentence.
   }
 }
 ```
+For writing your converter or getting a better hold of the concepts of frames and store in SLING, you can have a look at detailed deep dive on frames and stores [here](sling/frame/README.md).
 
 The SLING [Document class](sling/nlp/document/document.h)
 also has methods to incrementally make such document frames, e.g.
