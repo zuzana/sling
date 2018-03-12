@@ -26,6 +26,7 @@
 #   sudo ln -s $(realpath python) /usr/local/lib/python2.7/dist-packages/sling
 
 import os
+import sys
 import hashlib
 import base64
 import zipfile
@@ -52,7 +53,10 @@ data_dir = package + "-" + version + ".data/purelib"
 record_filename = dist_dir + "/RECORD"
 
 wheel_dir = "/tmp"
-wheel_basename = package + "-" + version + "-cp27-none-linux_x86_64.whl"
+if 'darwin' in sys.platform:
+  wheel_basename = package + "-" + version + "-py27-none-any.whl"
+else:
+  wheel_basename = package + "-" + version + "-cp27-none-linux_x86_64.whl"
 wheel_filename = wheel_dir + "/" + wheel_basename
 
 # Files to distribute in wheel.
@@ -70,7 +74,12 @@ record = ""
 
 # Write wheel metadata.
 wheel_metadata_filename = dist_dir + "/WHEEL"
-wheel_metadata = """Wheel-Version: 1.0
+if 'darwin' in sys.platform:
+  wheel_metadata = """Wheel-Version: 1.0
+Root-Is-Purelib: false
+Tag: py27-none-any"""
+else:
+  wheel_metadata = """Wheel-Version: 1.0
 Root-Is-Purelib: false
 Tag: cp27-none-linux_x86_64"""
 
